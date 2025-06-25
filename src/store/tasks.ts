@@ -9,6 +9,7 @@ export type TasksFilter = {
 type TasksState = {
   tasks: Task[]
   filter: TasksFilter
+  loadComplete: boolean
 }
 
 export const tasksStore = createStore({
@@ -16,6 +17,7 @@ export const tasksStore = createStore({
     <TasksState>{
       tasks: [],
       filter: { completed: null },
+      loadComplete: false,
     },
   getters: {
     tasksList(state) {
@@ -28,6 +30,7 @@ export const tasksStore = createStore({
   mutations: {
     setTasks(state, value: Task[]) {
       state.tasks = value
+      state.loadComplete = true
     },
     addTask(state, value: Task) {
       state.tasks.push(value)
@@ -48,6 +51,7 @@ export const tasksStore = createStore({
   },
   actions: {
     async loadTasks({ commit }) {
+      this.state.loadComplete = false
       const tasks = await loadTasks()
       commit('setTasks', tasks)
     },

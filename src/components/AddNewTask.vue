@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+defineProps<{
+  disabled: boolean
+}>()
+
 const emit = defineEmits<{
   (e: 'addClick', { title: string }): void
 }>()
@@ -17,8 +21,8 @@ const handleClick = () => {
 
 <template>
   <div class="add-new-task">
-    <input class="add-new-task__text" type="text" v-model="title" />
-    <button @click="handleClick">Удалить</button>
+    <input class="add-new-task__text" type="text" v-model="title" :disabled="disabled" />
+    <button @click="handleClick" :disabled="disabled">Добавить</button>
   </div>
 </template>
 

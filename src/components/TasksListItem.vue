@@ -31,7 +31,7 @@ watchEffect(() => {
       <input :id="`check${task.id}`" type="checkbox" @click="checkClick" v-model="checked" />
       <label :for="`check${task.id}`">{{ task.title }}</label>
     </div>
-    <input class="delete-task-button" type="button" value="Удалить" @click="deleteClick" />
+    <button @click="deleteClick">Удалить</button>
   </div>
 </template>
 

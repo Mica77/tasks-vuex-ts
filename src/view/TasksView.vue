@@ -29,7 +29,7 @@ const handleFilterTasksList = (e: TasksFilter) => {
 </script>
 
 <template>
-  <AddNewTask @add-click="addTask" />
+  <AddNewTask @add-click="addTask" :disabled="!tasksStore.state.loadComplete" />
   <TasksListFilter :value="tasksStore.state.filter" @filter="handleFilterTasksList" />
   <TasksList
     :list="tasksStore.getters.tasksList"
