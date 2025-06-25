@@ -7,7 +7,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'deleteClick', { id: number }): void
-  (e: 'check', Task): void
+  (e: 'change', Task): void
 }>()
 
 const handleDeleteClick = (e: { id: task.id }) => {
@@ -15,7 +15,7 @@ const handleDeleteClick = (e: { id: task.id }) => {
 }
 
 const handleCheckClick = (task, e: { checked: boolean }) => {
-  emit('check', { ...task, checked: e.checked })
+  emit('change', { ...task, checked: e.checked })
 }
 </script>
 

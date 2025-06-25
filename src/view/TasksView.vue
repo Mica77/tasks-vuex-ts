@@ -13,25 +13,29 @@ const addTask = ({ title }) => {
   })
 }
 
-const deleteTask = (e: { id: number }) => {
+const handleDeleteTask = (e: { id: number }) => {
   if (confirm('Удалить задание?')) {
     tasksStore.commit('delete', e.id)
   }
 }
 
-const checkTask = (e: Task) => {
+const handleUpdateTask = (e: Task) => {
   tasksStore.commit('update', e)
 }
 
-const filterTasksList = (e: TasksFilter) => {
+const handleFilterTasksList = (e: TasksFilter) => {
   tasksStore.commit('setFilter', e)
 }
 </script>
 
 <template>
   <AddNewTask @add-click="addTask" />
-  <TasksListFilter :value="tasksStore.state.filter" @filter="filterTasksList" />
-  <TasksList :list="tasksStore.getters.tasksList" @delete-click="deleteTask" @check="checkTask" />
+  <TasksListFilter :value="tasksStore.state.filter" @filter="handleFilterTasksList" />
+  <TasksList
+    :list="tasksStore.getters.tasksList"
+    @delete-click="handleDeleteTask"
+    @change="handleUpdateTask"
+  />
 </template>
 
 <style scoped lang="scss"></style>
