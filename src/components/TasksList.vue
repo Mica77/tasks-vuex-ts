@@ -7,15 +7,15 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'deleteClick', { id: number }): void
-  (e: 'check', { id: number, checked: boolean }): void
+  (e: 'check', Task): void
 }>()
 
-const deleteClick = (e: { id: task.id }) => {
+const handleDeleteClick = (e: { id: task.id }) => {
   emit('deleteClick', e)
 }
 
-const checkClick = (e: { id: task.id; checked: boolean }) => {
-  emit('check', e)
+const handleCheckClick = (task, e: { checked: boolean }) => {
+  emit('check', { ...task, checked: e.checked })
 }
 </script>
 
@@ -25,8 +25,8 @@ const checkClick = (e: { id: task.id; checked: boolean }) => {
       v-for="task in list"
       :task="task"
       :key="task.id"
-      @deleteClick="deleteClick({ id: task.id })"
-      @check="checkClick({ id: task.id, checked: $event.checked })"
+      @delete-click="handleDeleteClick({ id: task.id })"
+      @check="handleCheckClick(task, $event)"
     />
   </div>
 </template>

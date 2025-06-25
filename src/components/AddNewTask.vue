@@ -18,7 +18,7 @@ const handleClick = () => {
 <template>
   <div class="add-new-task">
     <input class="add-new-task__text" type="text" v-model="title" />
-    <input type="button" value="Добавить" @click="handleClick" />
+    <button @click="handleClick">Удалить</button>
   </div>
 </template>
 

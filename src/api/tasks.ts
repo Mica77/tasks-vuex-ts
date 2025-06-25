@@ -1,4 +1,4 @@
-import type { Task } from '@/entities.d.ts'
+import type { Task } from '@/types'
 
 export const loadTasks = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000))

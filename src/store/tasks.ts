@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import type { Task } from '@/entities.d.ts'
+import type { Task } from '@/types'
 import { loadTasks } from '@/api/tasks'
 
 export type TasksFilter = {
@@ -32,31 +32,30 @@ export const tasksStore = createStore({
     addTask(state, value: Task) {
       state.tasks.push(value)
     },
-    delete(state, value: { id: number }) {
-      state.tasks = state.tasks.filter((taskItem) => taskItem.id !== value.id)
+    delete(state, id: Task['id']) {
+      state.tasks = state.tasks.filter((taskItem) => taskItem.id !== id)
     },
-    update(state, value: { id: number; completed: boolean }) {
-      state.tasks.forEach((taskItem) => {
-        if (taskItem.id === value.id) {
-          taskItem.completed = value.completed
-        }
-      })
+    update(state, value: Task) {
+      const task = state.tasks.find((taskItem) => taskItem.id === value.id)
+      if (task) {
+        task.title = value.title
+        task.completed = value.completed
+      }
     },
     setFilter(state, value: TasksFilter) {
       state.filter = value
     },
   },
   actions: {
-    async get({ commit }) {
+    async loadTasks({ commit }) {
       const tasks = await loadTasks()
       commit('setTasks', tasks)
     },
-    add({ state, commit }, value: { title: string }) {
+    add({ state, commit }, value: Omit<Task, 'id'>) {
       const id = Math.max(...state.tasks.map((taskItem) => taskItem.id)) + 1
       const newTask = <Task>{
         id,
-        title: value.title,
-        completed: false,
+        ...value,
       }
       commit('addTask', newTask)
     },
